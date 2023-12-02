@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# change the dir to the script dir
+cd "$(dirname "$0")" || exit
+
 # set template dir
 TEMPLATE_DIR="./templates"
 
