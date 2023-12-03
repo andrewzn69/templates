@@ -37,15 +37,25 @@ copy_template() {
 				read -rp "Enter a new name for the file (press Enter to keep the existing name): " new_name
 				base_name=${target_file%.*}
 				extension=${target_file##*.}
-				if [ -n "$new_name" ]; then
-					target_file="$new_name.$extension"
-				else
+
+				# keep the existing name
+				if [ -z "$new_name" ]; then
 					counter=1
 					while [ -e "$current_dir/$base_name-$counter.$extension" ]; do
 						((counter++))
 					done
-
 					target_file="$base_name-$counter.$extension"
+				else
+					# new name and number
+					if [ -e "$current_dir/$new_name.$extension" ]; then
+						counter=1
+						while [ -e "$current_dir/$new_name-$counter.$extension" ]; do
+							((counter++))
+						done
+						target_file="$new_name-$counter.$extension"
+					else
+						target_file="$new_name.$extension"
+					fi
 				fi
 
 				cp "$selected_file" "$current_dir/$target_file"
