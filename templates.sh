@@ -75,7 +75,7 @@ copy_template() {
 }
 
 # select language
-selected_lang=$(find "$TEMPLATE_DIR" -maxdepth 1 -mindepth 1 -type d | xargs -I{} basename {} | fzf --prompt="Select a language: ")
+selected_lang=$(find "$TEMPLATE_DIR" -maxdepth 1 -mindepth 1 -type d -execdir basename {} \; | fzf --prompt="Select a language: ")
 
 if [[ -n $selected_lang ]]; then
 	copy_template "$selected_lang"
