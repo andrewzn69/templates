@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# get the current working directory
+current_dir=$(pwd)
+
 # change the dir to the script dir
 cd "$(dirname "$0")" || exit
 
@@ -17,7 +20,7 @@ copy_template() {
 	if [[ -n $selected_file ]]; then
 		target_file=$(basename "$selected_file")
 
-		if [ -e "$target_file" ]; then
+		if [ -e "$current_dir/$target_file" ]; then
 			echo "File '$target_file' already exists."
 
 			read -rp "Choose an option [D]o Nothing, [O]verwrite, [R]ename: " choice
@@ -27,26 +30,25 @@ copy_template() {
 				echo "Template not copied."
 				;;
 			[Oo])
-				cp "$selected_file" .
+				cp "$selected_file" "$current_dir"
 				echo "Template overwritten."
 				;;
 			[Rr])
 				read -rp "Enter a new name for the file (press Enter to keep the existing name): " new_name
+				base_name=${target_file%.*}
+				extension=${target_file##*.}
 				if [ -n "$new_name" ]; then
-					target_file="$new_name.typ"
+					target_file="$new_name.$extension"
 				else
-					base_name=${target_file%.*}
-					extension=${target_file##*.}
-
 					counter=1
-					while [ -e "$base_name-$counter.$extension" ]; do
+					while [ -e "$current_dir/$base_name-$counter.$extension" ]; do
 						((counter++))
 					done
 
 					target_file="$base_name-$counter.$extension"
 				fi
 
-				cp "$selected_file" "$target_file"
+				cp "$selected_file" "$current_dir/$target_file"
 				echo "Template copied with the new name: $target_file."
 				;;
 			*)
@@ -54,7 +56,7 @@ copy_template() {
 				;;
 			esac
 		else
-			cp "$selected_file" .
+			cp "$selected_file" "$current_dir"
 			echo "Template copied."
 		fi
 	else
