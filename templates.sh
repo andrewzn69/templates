@@ -27,9 +27,11 @@ copy_template() {
 
 			case $choice in
 			[Dd])
+				echo
 				echo "Template not copied."
 				;;
 			[Oo])
+				echo
 				cp "$selected_file" "$current_dir"
 				echo "Template overwritten."
 				;;
