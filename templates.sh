@@ -23,7 +23,7 @@ copy_template() {
 		if [ -e "$current_dir/$target_file" ]; then
 			echo "File '$target_file' already exists."
 
-			read -rp "Choose an option [D]o Nothing, [O]verwrite, [R]ename: " choice
+			read -n 1 -rp "Choose an option [D]o Nothing, [O]verwrite, [R]ename: " choice
 
 			case $choice in
 			[Dd])
@@ -34,6 +34,7 @@ copy_template() {
 				echo "Template overwritten."
 				;;
 			[Rr])
+				echo
 				read -rp "Enter a new name for the file (press Enter to keep the existing name): " new_name
 				base_name=${target_file%.*}
 				extension=${target_file##*.}
