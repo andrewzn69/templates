@@ -15,7 +15,6 @@ TEMPLATE_DIR="./templates"
 # copy template to current dir with fzf
 copy_template() {
 	lang_dir="$1"
-	#selected_file=$(find "$TEMPLATE_DIR/$lang_dir" -type f | fzf --prompt="Select a template: " --ansi --preview-window=right:50% --delimiter / --with-nth -1 --preview="bat --color=always --style=header,grid --line-range :300 {}")
 	selected_file=$(find "$TEMPLATE_DIR/$lang_dir" -type f | fzf --prompt="Select a template: " --ansi --preview-window=right:50% --delimiter / --with-nth -1 --preview="command -v bat >/dev/null && bat --color=always --style=header,grid --line-range :300 {} || cat {}")
 
 	if [[ -n $selected_file ]]; then
