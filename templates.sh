@@ -65,6 +65,7 @@ copy_template() {
 				echo "Template copied with the new name: $target_file."
 				;;
 			*)
+				echo
 				echo "Invalid option."
 				;;
 			esac
